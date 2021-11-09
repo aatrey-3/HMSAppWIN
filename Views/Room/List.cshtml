@@ -1,0 +1,163 @@
+﻿@model IEnumerable<HMSAppWIN.Models.Room>
+
+@{
+    ViewBag.Title = "Rooms List - HMS";
+    WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
+    if (ViewData["ServerError"] != null)
+    {
+        <script>
+            setTimeout(function () { ShowAlert("error", "Critical Server Error", "@ViewData["ServerError"].ToString()"); }, 500);
+            
+        </script>
+    }
+}
+
+<h2>Rooms List</h2>
+<title>@ViewBag.Title</title>
+
+<p>
+
+    @Html.ActionLink("Add New", "Creation", new { }, new { @class = "btn btn-outline-primary btn-round" })
+    <a href="javascript:ShowAlert('error', 'Error', 'This is a error message')">Click me</a>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-sm btn-primary btn-tooltip" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-sm btn-info btn-tooltip" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-sm btn-danger btn-tooltip" })
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+@webGrid.GetHtml(
+            htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+            columns: webGrid.Columns(
+                webGrid.Column(header: "ID", format: @<span class="ID" style="display:none">@item.ID</span>, style: "RoomID"),
+    webGrid.Column(header: "Room Number", format: @<span class="label">@item.RoomNo</span>, style: "RoomNo"),
+    webGrid.Column(header: "Room Type", format: @<span>
+        <span class="label">@item.RoomType</span>
+        <input class="text" type="text" value="@item.RoomType" style="display:none" />
+    </span>, style: "RoomType"),
+    webGrid.Column(header: "Status", format: @<span>
+                <span class="label">@item.Status</span>
+                <input class="text" type="text" value="@item.Status" style="display:none" />
+            </span>, style: "Status"),
+    webGrid.Column(format:@<span class="link">
+                        <a class="btn btn-sm btn-primary btn-tooltip Edit" href="javascript:;">Edit</a>
+                        <a class="btn btn-sm btn-info btn-tooltip Update" href="javascript:;" style="display:none">Update</a>
+                        <a class="btn btn-sm btn-danger btn-tooltip Cancel" href="javascript:;" style="display:none">Cancel</a>
+                    </span>)))
+
+@*<script src="~/assets/js/jquery.min.js"></script>*@
+
+<script type="text/javascript">
+    //Edit event handler.
+    $("body").on("click", "#WebGrid TBODY .Edit", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                $(this).find(".text").show();
+                $(this).find(".label").hide();
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+        $(this).hide();
+    });
+    //Update event handler.
+    $("body").on("click", "#WebGrid TBODY .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                span.html(input.val());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Cancel").hide();
+        $(this).hide();
+
+        var room = {};
+        room.ID = row.find(".ID").html();
+        room.RoomNo = row.find(".RoomNo").find(".label").html();
+        room.RoomType = row.find(".RoomType").find(".label").html();
+        room.Status = row.find(".Status").find(".label").html();
+        console.log(JSON.stringify(room));
+        $.ajax({
+            type: "POST",
+            url: "/Room/Update",
+            data: { model: room },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            beforeSend: function () { },
+            success: function (result) {
+   
+                if (result.IsSuccess == true)
+                    ShowAlert("success", "Room Update Successfull!", result.Message);
+                else
+                    /*alert("Room update failed");*/
+                    ShowAlert("error", "Room Update Unsuccessfull!", result.Message );
+
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                if (errorThrown == null || errorThrown == "") {
+                    errorThrown = "Failed to continue operation. Please try again later.";
+                }
+                ShowAlert("error", "Room Update Unsuccessfull!", errorThrown);
+            }
+        });
+    });
+
+    //Cancel event handler.
+    $("body").on("click", "#WebGrid TBODY .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                input.val(span.html());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+        $(this).hide();
+    });
+</script>

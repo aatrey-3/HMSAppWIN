@@ -1,0 +1,54 @@
+﻿@model HMSAppWIN.Models.Room
+
+@{
+    ViewBag.Title = "Room Details - HMS";
+    Layout = "~/Views/Shared/_LayoutRoom.cshtml";
+}
+
+<!-- breadcrumb-->
+
+<nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Patient Management</a></li>
+        <li class="breadcrumb-item"><a href="#">Rooms</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Details of Room</li>
+    </ol>
+</nav>
+
+<h2>Details</h2>
+<title>@ViewBag.Title</title>
+
+<div>
+    <h4>Room</h4>
+    <hr />
+    <dl class="form-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoomNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoomType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID },new { @class= "btn btn-warning" }) 
+    @Html.ActionLink("Back to List", "List",null,new { @class= "btn btn-1 btn-primary" })
+</p>

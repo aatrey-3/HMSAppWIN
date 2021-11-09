@@ -1,0 +1,266 @@
+﻿<!-- saved from url=(0076)https://demos.creative-tim.com/argon-design-system/docs/components/navs.html -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/assets/icon1/1x/wireframe.png">
+    <title>
+        HMS Dashboard
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="~/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="~/assets/css/argon-design-system.css" rel="stylesheet" />
+    <link href="~/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+
+</head>
+
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script>
+    function ShowAlert(type, title, message) {
+        if (type.toLowerCase() == "success") {
+            $("#successalert").modal("show");
+            $("#modal-title-success").text(title);
+            $("#successmsg").text(message);
+        }
+        if (type.toLowerCase() == "error") {
+            $("#erroralert").modal("show");
+            $("#modal-title-error").text(title);
+            $("#errormsg").text(message);
+        }
+    }
+</script>
+<body>
+
+    <!--navbar-->
+
+    <header class="navbar navbar-horizontal navbar-expand navbar-dark flex-row align-items-md-center ct-navbar bg-primary py-2">
+        <a class="navbar-brand mr-0 mr-md-2" href="#" aria-label="Bootstrap">
+            <img src="../../assets/img/brand/himg.png">
+            <sup>Management Portal</sup>
+        </a>
+        <ul class="navbar-nav flex-row mr-auto ml-4 d-none d-md-flex">
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/creativetimofficial/ct-argon-design-system-pro/issues" rel="nofollow" target="_blank">Help</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" rel="nofollow">
+                    <img src="../assets/icon1/1x/cycle.png" width="18" />
+                </a>
+            </li>
+        </ul>
+        <!--setting&account-->
+        <div class="d-none d-sm-block ml-auto">
+            <ul class="navbar-nav ct-navbar-nav flex-row align-items-center">
+                <li class="nav-item">
+                    <!--<a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial" rel="nofollow" target="_blank">
+                      <i class="fab fa-github"></i>
+                    </a>-->
+                    <a href="javascript:;" class="avatar avatar-sm rounded-circle">
+                        <img alt="Image placeholder" src="../assets/img/faces/team-3.jpg">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button class="navbar-toggler ct-search-docs-toggle d-block d-md-none ml-auto ml-sm-0" type="button" data-toggle="collapse" data-target="#ct-docs-nav" aria-controls="ct-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </header>
+
+
+
+
+    <!-- left-navbar&content-->
+
+    <div class="container-fluid">
+        <div class="row flex-xl-nowrap">
+            <div class="col-12 col-md-3 col-xl-2 ct-sidebar">
+                <nav class="collapse ct-links" id="ct-docs-nav">
+                    <div class="ct-toc-item active">
+
+                        <a class="ct-toc-link" href="#docs">
+                            <img src="../assets/icon1/1x/person_search.png" width="22" />
+                            Patient Management
+                        </a>
+                        <ul class="nav ct-sidenav" style="margin-left: 25;">
+                            <li class="@(ViewData["Controller"] != null && ViewData["Controller"].ToString() == "Patient" ? "active ct-sidenav-active" : "" )">
+                                <!--"active ct-sidenav-active"-->
+                                <a href="/Patient/Index">
+                                    Patients
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/getting-started/download.html">
+                                    Appointments(OPD)
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/getting-started/quick-start.html">
+                                    Hospitalization
+                                </a>
+                            </li>
+                            <li class="@(ViewData["Controller"] != null && ViewData["Controller"].ToString() == "Room" ? "active ct-sidenav-active" : "" )">
+                                <a href="/Room">
+                                    Room
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ct-toc-item active">
+                        <a class="ct-toc-link" href="#docs">
+                            <img src="../assets/icon1/1x/camera-2.png" width="19" />
+                            Laboratory  Management
+                        </a>
+                        <ul class="nav ct-sidenav" style="margin-left: 25;">
+                            <li class="">
+                                <a href="../../docs/foundation/colors.html">
+                                    Tests
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/foundation/grid.html">
+                                    Lab Reports
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="ct-toc-item active">
+                        <a class="ct-toc-link" href="#docs">
+                            <img src="../assets/icon1/1x/doc.png" width="18" />
+                            Doctor  Management
+                        </a>
+                        <ul class="nav ct-sidenav" style="margin-left: 25;">
+                            <li class="">
+                                <a href="../../docs/foundation/colors.html">
+                                    Doctors
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/foundation/grid.html">
+                                    Appointments(OPD)
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/foundation/grid.html">
+                                    Hospitalization
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="ct-toc-item active">
+                        <a class="ct-toc-link" href="#docs">
+                            <img src="../assets/icon1/1x/coronavirus.png" width="25" />
+                            COVID-19 [new]
+                        </a>
+                        <ul class="nav ct-sidenav" style="margin-left: 25;">
+                            <li class="">
+                                <a href="../../docs/foundation/colors.html">
+                                    Vaccination
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/foundation/grid.html">
+                                    Tests
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="ct-toc-item active">
+                        <a class="ct-toc-link" href="#docs">
+                            <img src="../assets/icon1/1x/statistics.png" width="24" />
+                            MIS Reports
+                        </a>
+                        <ul class="nav ct-sidenav" style="margin-left: 25;">
+                            <li class="">
+                                <a href="../../docs/foundation/colors.html">
+                                    Report 1
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="../../docs/foundation/grid.html">
+                                    Report 1
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    </ul>
+            </div>
+            </nav>
+            <div class="col-12 col-md-10">
+                @RenderBody()
+            </div>
+        </div>
+
+
+        @*<div class="alert alert-success alert-dismissible fade show" role="alert" id="successalert" style="display:none">
+            <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+            <span class="alert-inner--text"><strong>Success!</strong> <span id="successmsg">This is a success alert—check it out!</span></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>*@
+
+        @* SUCCESS MODAL--------------*@
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-default" style="display: none;" aria-hidden="true" id="successalert">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                <div class="modal-content bg-gradient-success" style="color:#ffffff">
+                    <div class="modal-header">
+                        <h6 class="modal-title-success" id="modal-title-default" style="color:#ffffff"><b><i class="fa fa-bell"></i>&nbsp; Success!</b></h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="successmsg">Far far away, behind the word mountains, far from the countries Vok</p>
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+
+        @* ERROR MODAL--------------*@
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-default" style="display: none;" aria-hidden="true" id="erroralert">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                <div class="modal-content bg-gradient-danger" style="color:#ffffff">
+                    <div class="modal-header">
+                        <h6 class="modal-title-error" id="modal-title-default" style="color:#ffffff"><b><i class="fa fa-bell"></i>&nbsp; Error!</b></h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errormsg">Far far away, behind the word mountains, far from the countries </p>
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

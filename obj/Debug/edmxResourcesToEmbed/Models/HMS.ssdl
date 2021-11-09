@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="DoctorCharge" Type="bigint" Nullable="false" />
+    <Property Name="RoomCharge" Type="bigint" Nullable="false" />
+    <Property Name="NumberofDays" Type="int" Nullable="false" />
+    <Property Name="LabChargeBill" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="INPatient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomNo" Type="int" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="DateofAdmission" Type="datetime" Nullable="false" />
+    <Property Name="DateofDischarge" Type="datetime" />
+    <Property Name="LabNo" Type="int" />
+  </EntityType>
+  <EntityType Name="Laboratory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OUTPatient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="LabNo" Type="int" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Disease" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomNo" Type="bigint" Nullable="false" />
+    <Property Name="RoomType" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Bill__PatientId__5535A963">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bill">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__INPatient__LabNo__4E88ABD4">
+    <End Role="Laboratory" Type="Self.Laboratory" Multiplicity="0..1" />
+    <End Role="INPatient" Type="Self.INPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Laboratory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPatient">
+        <PropertyRef Name="LabNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__INPatient__Patie__4D94879B">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="INPatient" Type="Self.INPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPatient">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__INPatient__RoomN__4CA06362">
+    <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+    <End Role="INPatient" Type="Self.INPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="INPatient">
+        <PropertyRef Name="RoomNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Laborator__Docto__3F466844">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Laboratory" Type="Self.Laboratory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Laboratory">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Laborator__Patie__403A8C7D">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Laboratory" Type="Self.Laboratory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Laboratory">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OUTPatien__LabNo__52593CB8">
+    <End Role="Laboratory" Type="Self.Laboratory" Multiplicity="0..1" />
+    <End Role="OUTPatient" Type="Self.OUTPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Laboratory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPatient">
+        <PropertyRef Name="LabNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OUTPatien__Patie__5165187F">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="OUTPatient" Type="Self.OUTPatient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OUTPatient">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Patient__DoctorI__398D8EEE">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HMSModelStoreContainer">
+    <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INPatient" EntityType="Self.INPatient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Laboratory" EntityType="Self.Laboratory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OUTPatient" EntityType="Self.OUTPatient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Bill__PatientId__5535A963" Association="Self.FK__Bill__PatientId__5535A963">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Bill" EntitySet="Bill" />
+    </AssociationSet>
+    <AssociationSet Name="FK__INPatient__LabNo__4E88ABD4" Association="Self.FK__INPatient__LabNo__4E88ABD4">
+      <End Role="Laboratory" EntitySet="Laboratory" />
+      <End Role="INPatient" EntitySet="INPatient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__INPatient__Patie__4D94879B" Association="Self.FK__INPatient__Patie__4D94879B">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="INPatient" EntitySet="INPatient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__INPatient__RoomN__4CA06362" Association="Self.FK__INPatient__RoomN__4CA06362">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="INPatient" EntitySet="INPatient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Laborator__Docto__3F466844" Association="Self.FK__Laborator__Docto__3F466844">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Laboratory" EntitySet="Laboratory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Laborator__Patie__403A8C7D" Association="Self.FK__Laborator__Patie__403A8C7D">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Laboratory" EntitySet="Laboratory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OUTPatien__LabNo__52593CB8" Association="Self.FK__OUTPatien__LabNo__52593CB8">
+      <End Role="Laboratory" EntitySet="Laboratory" />
+      <End Role="OUTPatient" EntitySet="OUTPatient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OUTPatien__Patie__5165187F" Association="Self.FK__OUTPatien__Patie__5165187F">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="OUTPatient" EntitySet="OUTPatient" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Patient__DoctorI__398D8EEE" Association="Self.FK__Patient__DoctorI__398D8EEE">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
