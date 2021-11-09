@@ -1,9 +1,21 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Controller"] = "Patient";
+    ViewBag.Title = "HMS Dashboard - Patient";
 }
 
-<h2>Index</h2>
+<!-- breadcrumb-->
+
+<nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Patient Management</a></li>
+        <li class="breadcrumb-item"><a href="#">Rooms</a></li>
+        <li class="breadcrumb-item active" aria-current="page">List of Rooms</li>
+    </ol>
+</nav>
+
+@{Html.RenderAction("List");
+}
 

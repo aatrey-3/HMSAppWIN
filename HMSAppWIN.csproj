@@ -178,6 +178,7 @@
     <Content Include="Views\Room\Delete.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
     <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Patient\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

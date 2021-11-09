@@ -1,0 +1,21 @@
+﻿@model IEnumerable<HMSAppWIN.Models.Patient>
+
+@{
+    ViewBag.Title = "Patients List - HMS";
+    WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
+    if (ViewData["ServerError"] != null)//hello
+    {
+        <script>
+            setTimeout(function () { ShowAlert("error", "Critical Server Error", "@ViewData["ServerError"].ToString()"); }, 500);
+
+        </script>
+    }
+
+ }
+
+
+
+
+
+
+
