@@ -14,10 +14,7 @@ namespace HMSAppWIN.Controllers
 //            TempData["Controller"] = "Room";
 
 //}
-        public ActionResult Creation()
-        {
-            return View();
-        }
+        
 
         public ActionResult Index()
         {
@@ -43,18 +40,7 @@ namespace HMSAppWIN.Controllers
             return PartialView(rooms);
         }
 
-        public ActionResult Edit(int id)
-        {
-            Room room = null;
-
-            using (var db = new HMSEntities())
-            {
-                room = db.Rooms.Where(x => x.ID == id).FirstOrDefault();
-
-            }
-            return View(room);
-
-        }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Room model)
@@ -85,41 +71,7 @@ namespace HMSAppWIN.Controllers
 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Creation(Room model)
-        {
 
-
-            using (var db = new HMSEntities())
-            {
-
-                db.Rooms.Add(model);
-                db.SaveChanges();
-            }
-            string message = "Room creation successfull!";
-
-            ViewBag.Message = message;
-            return View();
-        }
-
-        public ActionResult Details(int id)
-        {
-            Room room = null;
-
-            using (var db = new HMSEntities())
-            {
-                room = db.Rooms.Where(x => x.ID == id).FirstOrDefault();
-
-            }
-            return View(room);
-
-        }
-
-        public ActionResult Delete()
-        {
-            return View();
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)

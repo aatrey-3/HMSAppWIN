@@ -32,5 +32,77 @@ namespace HMSAppWIN.Controllers
             }
             return PartialView(patients);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Patient model)
+        {
+
+            using (var db = new HMSEntities())
+            {
+
+                var patient = db.Patients.Where(x => x.ID == model.ID).FirstOrDefault();
+
+                if (patient != null)
+                {
+                    patient.Name = model.Name;
+                    patient.Age = model.Age;
+                    patient.Gender = model.Gender;
+                    patient.Address = model.Address;
+                    patient.Disease = model.Disease;
+                    db.SaveChanges();
+                    ViewBag.Message = "Patient details updated successfully";
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid details! Please check the details carefully and try again";
+                    return View();
+                }
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult Update(Patient model)
+        { //{"IsSuccess":"true","Message":""}
+            HMSResponse res = new HMSResponse();
+
+            try
+            {
+
+                using (var db = new HMSEntities())
+                {
+                    //JavaScriptSerializer deser = new JavaScriptSerializer();
+                    //Room model = deser.Deserialize<Room>(modeljson);
+                    var patient = db.Patients.Where(x => x.ID == model.ID).FirstOrDefault();
+
+                    if (patient != null)
+                    {
+                        patient.Name = model.Name;
+                        patient.Age = model.Age;
+                        patient.Gender = model.Gender;
+                        patient.Address = model.Address;
+                        patient.Disease = model.Disease;
+                        db.SaveChanges();
+
+                        res.IsSuccess = true;
+                        res.Message = "Patient details updated successfully.";
+                        //res.Data = new Room { ID = 999 };
+                    }
+                    else
+                    {
+                        res.Message = "Failed to update patient details";
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+            }
+            return Json(res, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

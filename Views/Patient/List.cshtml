@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<HMSAppWIN.Models.Patient>
 
 @{
-    ViewBag.Title = "Patients List - HMS";
+    //ViewBag.Title = "Patients List - HMS";
     WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
-    if (ViewData["ServerError"] != null)//hello
+    if (ViewData["ServerError"] != null)
     {
         <script>
             setTimeout(function () { ShowAlert("error", "Critical Server Error", "@ViewData["ServerError"].ToString()"); }, 500);
@@ -11,9 +11,127 @@
         </script>
     }
 
- }
+}
+
+@webGrid.GetHtml(
+            htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+            columns: webGrid.Columns(
+                webGrid.Column(header: "ID", format: @<span class="ID" style="display:none">@item.ID</span>, style: "PatientID"),
+webGrid.Column(header: "Name", format: @<span>
+            <span class="label">@item.Name</span>
+            <input class="text" type="text" value="@item.Name" style="display:none" />
+        </span>, style: "PatientName"),
+webGrid.Column(header: "Age", format: @<span>
+                    <span class="label">@item.Age</span>
+                    <input class="text" type="text" value="@item.Age" style="display:none" />
+                </span>, style: "PatientAge"),
+ webGrid.Column(header: "Gender", format: @<span>
+                            <span class="label">@item.Gender</span>
+                            <input class="text" type="text" value="@item.Gender" style="display:none" />
+                        </span>, style: "PatientGender"),
+ webGrid.Column(header: "Address", format: @<span>
+                                    <span class="label">@item.Address</span>
+                                    <input class="text" type="text" value="@item.Address" style="display:none" />
+                                </span>, style: "PatientAddress"),
+ webGrid.Column(header: "Disease", format: @<span>
+                                            <span class="label">@item.Disease</span>
+                                            <input class="text" type="text" value="@item.Disease" style="display:none" />
+                                        </span>, style: "PatientDisease"),
+ webGrid.Column(header: "Doctor", format: @<span>
+                                                    <span class="label">@item.DoctorID</span>
+                                                    <input class="text" type="text" value="@item.DoctorID" style="display:none" />
+                                                </span>, style: "DoctorID"),
+                           webGrid.Column(format:@<span class="link">
+                                                                                    <a class="btn btn-sm btn-primary btn-tooltip Edit" href="javascript:;">Edit</a>
+                                                                                    <a class="btn btn-sm btn-info btn-tooltip Update" href="javascript:;" style="display:none">Update</a>
+                                                                                    <a class="btn btn-sm btn-danger btn-tooltip Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                                                                </span>)))
+
+@*<script src="~/assets/js/jquery.min.js"></script>*@
+
+<script type="text/javascript">
+    //Edit event handler.
+    $("body").on("click", "#WebGrid TBODY .Edit", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                $(this).find(".text").show();
+                $(this).find(".label").hide();
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+        $(this).hide();
+    });
+    //Update event handler.
+    $("body").on("click", "#WebGrid TBODY .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                span.html(input.val());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Cancel").hide();
+        $(this).hide();
+
+        var patient = {};
+        patient.ID = row.find(".PatientID").text();
+        patient.Name = row.find(".PatientName").find(".label").text();
+        patient.Age = row.find(".PatientAge").find(".label").text();
+        patient.Gender = row.find(".PatientGender").find(".label").text();
+        patient.Address = row.find(".PatientAddress").find(".label").text();
+        patient.Disease = row.find(".PatientDisease").find(".label").text();
+        patient.DoctorID = row.find(".DoctorID").find(".label").text();
+        console.log(JSON.stringify(patient));
+        $.ajax({
+            type: "POST",
+            url: "/Patient/Update",
+            data: { model: patient },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            beforeSend: function () { },
+            success: function (result) {
+
+                if (result.IsSuccess == true)
+                    ShowAlert("success", "Patient Details Update Successfull!", result.Message);
+                else
+                    /*alert("Room update failed");*/
+                    ShowAlert("error", "Patient Details Update Unsuccessfull!", result.Message);
 
 
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                if (errorThrown == null || errorThrown == "") {
+                    errorThrown = "Failed to continue operation. Please try again later.";
+                }
+                ShowAlert("error", "Patient Details Update Unsuccessfull!", errorThrown);
+            }
+        });
+    });
+
+    //Cancel event handler.
+    $("body").on("click", "#WebGrid TBODY .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                input.val(span.html());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+        $(this).hide();
+    });
+</script>
 
 
 

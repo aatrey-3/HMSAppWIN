@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HMSAppWIN.Models.Room>
 
 @{
-    ViewBag.Title = "Rooms List - HMS";
+    //ViewBag.Title = "Rooms List - HMS";
     WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
     if (ViewData["ServerError"] != null)
     {
