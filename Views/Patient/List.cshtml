@@ -13,6 +13,9 @@
 
 }
 
+
+
+
 @webGrid.GetHtml(
             htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
             columns: webGrid.Columns(
@@ -38,13 +41,15 @@ webGrid.Column(header: "Age", format: @<span>
                                             <input class="text" type="text" value="@item.Disease" style="display:none" />
                                         </span>, style: "PatientDisease"),
  webGrid.Column(header: "Doctor", format: @<span>
-                                                    <span class="label">@item.DoctorID</span>
-                                                    <input class="text" type="text" value="@item.DoctorID" style="display:none" />
+                                                    <span class="label">@item.DoctorId</span>
+                                                    <input class="text" type="text" value="@item.Doctor.Name" style="display:none" />
                                                 </span>, style: "DoctorID"),
                            webGrid.Column(format:@<span class="link">
                                                                                     <a class="btn btn-sm btn-primary btn-tooltip Edit" href="javascript:;">Edit</a>
                                                                                     <a class="btn btn-sm btn-info btn-tooltip Update" href="javascript:;" style="display:none">Update</a>
-                                                                                    <a class="btn btn-sm btn-danger btn-tooltip Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                                                                    <a class="btn btn-sm btn-danger btn-tooltip Delete" href="javascript:;" style="display:none">Delete</a>
+                                                                                    <a class="btn btn-sm btn-warning btn-tooltip Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                                                                    
                                                                                 </span>)))
 
 @*<script src="~/assets/js/jquery.min.js"></script>*@
@@ -60,6 +65,7 @@ webGrid.Column(header: "Age", format: @<span>
             }
         });
         row.find(".Update").show();
+        row.find(".Delete").show();
         row.find(".Cancel").show();
         $(this).hide();
     });
@@ -77,6 +83,7 @@ webGrid.Column(header: "Age", format: @<span>
         });
         row.find(".Edit").show();
         row.find(".Cancel").hide();
+        row.find(".Delete").hide();
         $(this).hide();
 
         var patient = {};
@@ -115,6 +122,63 @@ webGrid.Column(header: "Age", format: @<span>
         });
     });
 
+    //Delete event handler.
+    $("body").on("click", "#WebGrid TBODY .Delete", function () {
+        
+        var row = $(this).closest("tr");
+        var callback = function () { DeletePatient(row) };
+        ShowConfirmation("ARe you sure you want to delete this record?", callback, null);
+    });
+
+    function DeletePatient(row) {
+        
+        $("td", row).each(function () {
+            if ($(this).find(".text").length > 0) {
+                var span = $(this).find(".label");
+                var input = $(this).find(".text");
+                span.html(input.val());
+                span.show();
+                input.hide();
+            }
+        });
+        //row.find(".Edit").show();
+        //row.find(".Cancel").hide();
+        //row.find(".Delete").hide();
+        //row.find(".Update").hide();
+        /*$(this).hide();*/
+
+        var patientid = {};
+        patientid.ID = row.find(".PatientID").text();
+        console.log(JSON.stringify(patientid));
+        $.ajax({
+            type: "POST",
+            url: "/Patient/Delete",
+            data: { model: patientid },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            beforeSend: function () { },
+            success: function (result) {
+
+                if (result.IsSuccess == true) {
+                    ShowAlert("success", "Patient Details Update Successfull!", result.Message);
+                    $(row).detach();
+                }
+                else
+                    /*alert("Room update failed");*/
+                    ShowAlert("error", "Patient Details Update Unsuccessfull!", result.Message);
+
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                if (errorThrown == null || errorThrown == "") {
+                    errorThrown = "Failed to continue operation. Please try again later.";
+                }
+                ShowAlert("error", "Patient Details Update Unsuccessfull!", errorThrown);
+            }
+        });
+    }
+
     //Cancel event handler.
     $("body").on("click", "#WebGrid TBODY .Cancel", function () {
         var row = $(this).closest("tr");
@@ -129,6 +193,7 @@ webGrid.Column(header: "Age", format: @<span>
         });
         row.find(".Edit").show();
         row.find(".Update").hide();
+        row.find(".Delete").hide();
         $(this).hide();
     });
 </script>
