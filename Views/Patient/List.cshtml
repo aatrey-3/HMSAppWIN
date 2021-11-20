@@ -19,7 +19,7 @@
 @webGrid.GetHtml(
             htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
             columns: webGrid.Columns(
-                webGrid.Column(header: "ID", format: @<span class="ID" style="display:none">@item.ID</span>, style: "PatientID"),
+                @*webGrid.Column(header: "ID", format: @<span class="ID" style="display:none">@item.ID</span>, style: "PatientID"),*@
 webGrid.Column(header: "Name", format: @<span>
             <span class="label">@item.Name</span>
             <input class="text" type="text" value="@item.Name" style="display:none" />
@@ -127,7 +127,7 @@ webGrid.Column(header: "Age", format: @<span>
         
         var row = $(this).closest("tr");
         var callback = function () { DeletePatient(row) };
-        ShowConfirmation("ARe you sure you want to delete this record?", callback, null);
+        ShowConfirmation("Are you sure you want to delete this record?", callback, null);
     });
 
     function DeletePatient(row) {
