@@ -39,6 +39,13 @@
             $("#errormsg").text(message);
         }
     }
+
+    function ShowDiag(name) {
+        if (name.toLowerCase() == "newdiag") {
+            $("#patientnewdialogue").modal("show");
+        }
+    }
+
     function ShowConfirmation(message, yesCallback, noCallback) {
         $('#confmsg').html(message);
 
@@ -255,6 +262,7 @@
 
         @* ERROR MODAL--------------*@
 
+
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-default" style="display: none;" aria-hidden="true" id="erroralert">
             <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                 <div class="modal-content bg-gradient-danger" style="color:#ffffff">
@@ -275,7 +283,9 @@
             </div>
         </div>
 
+
         @* CONFIRMATION MODAL--------------*@
+
 
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-default" style="display: none;" aria-hidden="true" id="confirmation">
             <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -298,6 +308,43 @@
                 </div>
             </div>
         </div>
+
+        @* DIALOGUE MODAL--------------*@
+
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-default" style="display: none;" aria-hidden="true" id="patientnewdialogue">
+            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                <div class="modal-content bg-gradient-success" style="color:#ffffff">
+                    <div class="modal-header">
+                        <h6 class="modal-title-success" id="modal-title-default" style="color:#ffffff"><b><i class="ni ni-badge"></i>&nbsp; New Patient Registration</b></h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="successmsg">Enter new patient details below</p>
+                        <p>
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="Enter name here...." class="form-control form-control-alternative">
+                            <label for="age">Age</label>
+                            <input type="text" id="age" placeholder="Enter age here...." class="form-control form-control-alternative">
+                            <label for="gender">Gender</label>
+                            <select name="gender" id="gender">
+                                <option value="null">Choose one...</optionvalue>
+                                <option value="m">Male</option>
+                                <option value="f">Female</option>
+                            </select>
+                        </p>
+                        
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 </body>
