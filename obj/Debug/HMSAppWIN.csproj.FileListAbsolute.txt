@@ -73,4 +73,3 @@ D:\HMS_MVCAPP\HMSAppWIN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.x
 D:\HMS_MVCAPP\HMSAppWIN\obj\Debug\HMSAppWIN.dll
 D:\HMS_MVCAPP\HMSAppWIN\obj\Debug\HMSAppWIN.pdb
 D:\HMS_MVCAPP\HMSAppWIN\obj\Debug\HMSAppWIN.csproj.CopyComplete
-D:\HMS_MVCAPP\HMSAppWIN\obj\Debug\HMSAppWIN.csproj.AssemblyReference.cache

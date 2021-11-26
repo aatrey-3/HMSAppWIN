@@ -7,22 +7,62 @@
     {
         <script>
             setTimeout(function () { ShowAlert("error", "Critical Server Error", "@ViewData["ServerError"].ToString()"); }, 500);
-
         </script>
     }
 
 }
 
 <p>
-    <a class="btn btn-info" href="javascript:ShowDiag('newdiag', 'New Patient Registration', 'Enter new patient details below')">Add New</a>
+    <script type="text/javascript">
+        var callback = function () { AddPatient() };
+    </script>
+    <a class="btn btn-info" href="javascript:ShowDiag('newdiag',callback)">Add New</a>
+    <script type="text/javascript">
+        function AddPatient() {
+            var newpatient = {};
+            newpatient.Name = $(".modal-body").find("#name").val();
+            newpatient.Age = $(".modal-body").find("#age").val();
+            newpatient.Gender = $(".modal-body").find("#gender").val();
+            newpatient.Address = $(".modal-body").find("#address").val();
+            newpatient.Disease = $(".modal-body").find("#disease").val();
+            console.log(JSON.stringify(newpatient));
+            $.ajax({
+                type: "POST",
+                url: "/Patient/Add",
+                data: { model: newpatient },
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                beforeSend: function () { },
+                success: function (result) {
 
+                    if (result.IsSuccess == true) {
+                        ShowAlert("success", "Patient Details Update Successfull!", result.Message);
+                        window.location.href = "";
+                    }
+                    else
+                        /*alert("Room update failed");*/
+                        ShowAlert("error", "Patient Details Update Unsuccessfull!", result.Message);
+
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    if (errorThrown == null || errorThrown == "") {
+                        errorThrown = "Failed to continue operation. Please try again later.";
+                    }
+                    ShowAlert("error", "Patient Details Update Unsuccessfull!", errorThrown);
+                }
+            });
+           /* window.location.href = ""; FOR REFRESH*/
+        }
+    </script>
 </p>
 
 
 @webGrid.GetHtml(
             htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
             columns: webGrid.Columns(
-                @*webGrid.Column(header: "ID", format: @<span class="ID" style="display:none">@item.ID</span>, style: "PatientID"),*@
+                webGrid.Column(header: "", format: @<span class="ID" style="display:none">@item.ID</span>, style: "PatientID"),
 webGrid.Column(header: "Name", format: @<span>
             <span class="label">@item.Name</span>
             <input class="text" type="text" value="@item.Name" style="display:none" />
@@ -43,12 +83,12 @@ webGrid.Column(header: "Age", format: @<span>
                                             <span class="label">@item.Disease</span>
                                             <input class="text" type="text" value="@item.Disease" style="display:none" />
                                         </span>, style: "PatientDisease"),
- webGrid.Column(header: "Doctor", format: @<span>
+ @*webGrid.Column(header: "Doctor", format: @<span>
                                                     <span class="label">@item.DoctorId</span>
                                                     <input class="text" type="text" value="@item.Doctor.Name" style="display:none" />
-                                                </span>, style: "DoctorID"),
+                                                </span>, style: "DoctorID"),*@
                            webGrid.Column(format:@<span class="link">
-                                                                                    <a class="btn btn-sm btn-primary btn-tooltip Edit" href="javascript:;">Edit</a>
+                                                                                    <a class="btn btn-sm btn-primary btn-tooltip Edit" href="javascript:;">Actions</a>
                                                                                     <a class="btn btn-sm btn-info btn-tooltip Update" href="javascript:;" style="display:none">Update</a>
                                                                                     <a class="btn btn-sm btn-danger btn-tooltip Delete" href="javascript:;" style="display:none">Delete</a>
                                                                                     <a class="btn btn-sm btn-warning btn-tooltip Cancel" href="javascript:;" style="display:none">Cancel</a>
@@ -163,12 +203,12 @@ webGrid.Column(header: "Age", format: @<span>
             success: function (result) {
 
                 if (result.IsSuccess == true) {
-                    ShowAlert("success", "Patient Details Update Successfull!", result.Message);
+                    ShowAlert("success", "Patient Details Delete Successfull!", result.Message);
                     $(row).detach();
                 }
                 else
                     /*alert("Room update failed");*/
-                    ShowAlert("error", "Patient Details Update Unsuccessfull!", result.Message);
+                    ShowAlert("error", "Patient Details Delete Unsuccessfull!", result.Message);
 
 
             },
@@ -177,7 +217,7 @@ webGrid.Column(header: "Age", format: @<span>
                 if (errorThrown == null || errorThrown == "") {
                     errorThrown = "Failed to continue operation. Please try again later.";
                 }
-                ShowAlert("error", "Patient Details Update Unsuccessfull!", errorThrown);
+                ShowAlert("error", "Patient Details Delete Unsuccessfull!", errorThrown);
             }
         });
     }

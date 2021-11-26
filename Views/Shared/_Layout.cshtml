@@ -40,10 +40,15 @@
         }
     }
 
-    function ShowDiag(name) {
+    function ShowDiag(name,callback) {
         if (name.toLowerCase() == "newdiag") {
             $("#patientnewdialogue").modal("show");
         }
+        $("#submit").focus();
+        $('#submit').unbind().click(function () {
+            $('#patientnewdialogue').modal('hide');
+            callback();
+        });
     }
 
     function ShowConfirmation(message, yesCallback, noCallback) {
@@ -76,7 +81,7 @@
                 <a class="nav-link" href="https://github.com/creativetimofficial/ct-argon-design-system-pro/issues" rel="nofollow" target="_blank">Help</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="" rel="nofollow">
+                <a class="nav-link" href="" rel="nofollow" id="lnkrefresh">
                     <img src="../assets/icon1/1x/cycle.png" width="18" />
                 </a>
             </li>
@@ -251,10 +256,9 @@
                     <div class="modal-body">
                         <p id="successmsg">Far far away, behind the word mountains, far from the countries Vok</p>
                     </div>
-                    @*<div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-                    </div>*@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">Ok</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -275,10 +279,9 @@
                     <div class="modal-body">
                         <p id="errormsg">Far far away, behind the word mountains, far from the countries </p>
                     </div>
-                    @*<div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-                    </div>*@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">Ok</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -298,13 +301,12 @@
                     </div>
                     <div class="modal-body">
                         <p id="confmsg">Far far away, behind the word mountains, far from the countries </p>
+                        
+                    </div>
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-round" id="y">Yes</button>
                         <button type="button" class="btn btn-secondary btn-round" id="n">No</button>
                     </div>
-                    @*<div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-                    </div>*@
                 </div>
             </div>
         </div>
@@ -321,25 +323,35 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p id="successmsg">Enter new patient details below</p>
-                        <p>
-                            <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="Enter name here...." class="form-control form-control-alternative">
-                            <label for="age">Age</label>
-                            <input type="text" id="age" placeholder="Enter age here...." class="form-control form-control-alternative">
-                            <label for="gender">Gender</label>
+                        <div class="row">Enter new patient details below</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span for="name">Name</span>
+                                <input type="text" id="name" placeholder="Enter name here...." class="form-control form-control-alternative">
+                                <span for="age">Age</span>
+                                <input type="text" id="age" placeholder="Enter age here...." class="form-control form-control-alternative">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span for="gender">Gender</span>
                             <select name="gender" id="gender">
-                                <option value="null">Choose one...</optionvalue>
-                                <option value="m">Male</option>
-                                <option value="f">Female</option>
+                                <option value="null">Choose one...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
-                        </p>
+                        </div>
+                        <div class="row">
+                            <span for="address">Address</span>
+                            <input type="text" id="address" placeholder="Enter address here...." class="form-control form-control-alternative">
+                            <span for="disease">Disease</span>
+                            <input type="text" id="disease" placeholder="Enter disease here...." class="form-control form-control-alternative">
+                        </div>
                         
                     </div>
-                    @*<div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-                    </div>*@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-round" id="submit">Submit</button>
+                        <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>

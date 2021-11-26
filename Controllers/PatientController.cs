@@ -23,7 +23,8 @@ namespace HMSAppWIN.Controllers
             {
                 using (var db = new HMSEntities())
                 {
-                    patients = db.Patients.Include("Doctor").ToList();
+                    //patients = db.Patients.Include("Doctor").ToList();
+                    patients = db.Patients.ToList();
                 }
             }
             catch(Exception ex)
@@ -139,6 +140,33 @@ namespace HMSAppWIN.Controllers
             }
             return Json(res, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public JsonResult Add(Patient model)
+        {
+            HMSResponse response = new HMSResponse();
+            try
+            {
+                using(var db = new HMSEntities())
+                {
+                    if (model != null)
+                    {
+                        db.Patients.Add(model);
+                        db.SaveChanges();
+                        response.IsSuccess = true;
+                        response.Message = "Patient record added successfully.";
+                    }
+                    else
+                    {
+                        response.Message = "Patient record passed was empty. Failed to add to database.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Message=ex.Message;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }
