@@ -11,8 +11,7 @@ namespace HMSAppWIN.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Room
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,14 +21,8 @@ namespace HMSAppWIN.Models
         }
     
         public int ID { get; set; }
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Room no. is required")]
-        [Display(Name ="Room Number")]
         public long RoomNo { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Room type is required")]
-        [Display(Name ="Room Type")]
         public string RoomType { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Room status is required")]
-        [Display(Name ="Room Status")]
         public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

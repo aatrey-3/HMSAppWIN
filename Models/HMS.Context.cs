@@ -32,6 +32,5 @@ namespace HMSAppWIN.Models
         public virtual DbSet<OUTPatient> OUTPatients { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
-        public object Room { get; internal set; }
     }
 }
